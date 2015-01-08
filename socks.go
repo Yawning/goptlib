@@ -118,12 +118,12 @@ func (ln *SocksListener) Accept() (net.Conn, error) {
 // 	for {
 // 		conn, err := ln.AcceptSocks()
 // 		if err != nil {
-// 			if e, ok := err.(net.Error); ok && !e.Temporary() {
-// 				log.Printf("permanent accept error; giving up: %s", err)
-// 				break
+// 			if e, ok := err.(net.Error); ok && e.Temporary() {
+// 				log.Printf("temporary accept error; trying again: %s", err)
+// 				continue
 // 			}
-// 			log.Printf("temporary accept error; trying again: %s", err)
-// 			continue
+// 			log.Printf("permanent accept error; giving up: %s", err)
+// 			break
 // 		}
 // 		go handleConn(conn)
 // 	}
